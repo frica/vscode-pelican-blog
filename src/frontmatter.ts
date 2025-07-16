@@ -1,4 +1,3 @@
-import * as matter from 'gray-matter';
 import * as fs from 'fs';
 
 export interface PostFrontmatter {
@@ -15,16 +14,49 @@ export interface PostFrontmatter {
 export class FrontmatterParser {
   
   /**
-   * Parse frontmatter from a markdown file
+   * Parse Pelican metadata from a markdown file
    */
   static parseFile(filePath: string): { data: PostFrontmatter; content: string } {
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    const parsed = matter(fileContent);
+    const lines = fileContent.split('\n');
+    const metadata: PostFrontmatter = {};
+    let contentStart = 0;
     
-    return {
-      data: parsed.data as PostFrontmatter,
-      content: parsed.content
-    };
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      
+      // Stop at the first blank line (content separator)
+      if (line.trim() === '') {
+        contentStart = i + 1;
+        break;
+      }
+      
+      // Parse metadata lines (Key: Value format)
+      const match = line.match(/^([A-Za-z]+):\s*(.*)$/);
+      if (match) {
+        const key = match[1].toLowerCase();
+        let value = match[2].trim();
+        
+        // Remove quotes if present
+        if ((value.startsWith('"') && value.endsWith('"')) || 
+            (value.startsWith("'") && value.endsWith("'"))) {
+          value = value.slice(1, -1);
+        }
+        
+        // Handle special cases
+        if (key === 'tags' && value) {
+          metadata[key] = value.split(',').map(tag => tag.trim());
+        } else if (value) {
+          metadata[key] = value;
+        }
+      } else if (line.trim() && Object.keys(metadata).length === 0) {
+        // If we haven't found any metadata and hit a non-empty line, this might not be Pelican format
+        break;
+      }
+    }
+    
+    const remainingContent = lines.slice(contentStart).join('\n');
+    return { data: metadata, content: remainingContent };
   }
 
   /**
@@ -34,7 +66,25 @@ export class FrontmatterParser {
     const { data, content } = this.parseFile(filePath);
     const updatedData = { ...data, ...newData };
     
-    const updatedContent = matter.stringify(content, updatedData);
+    // Build Pelican metadata format
+    let metadataLines: string[] = [];
+    
+    // Convert back to Pelican format with proper capitalization
+    Object.keys(updatedData).forEach(key => {
+      const value = updatedData[key];
+      if (value !== undefined && value !== null) {
+        const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
+        if (Array.isArray(value)) {
+          metadataLines.push(`${capitalizedKey}: ${value.join(', ')}`);
+        } else if (typeof value === 'string' && (value.includes(' ') || value.includes(':'))) {
+          metadataLines.push(`${capitalizedKey}: "${value}"`);
+        } else {
+          metadataLines.push(`${capitalizedKey}: ${value}`);
+        }
+      }
+    });
+    
+    const updatedContent = metadataLines.join('\n') + '\n\n' + content;
     fs.writeFileSync(filePath, updatedContent, 'utf8');
   }
 

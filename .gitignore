@@ -6,3 +6,6 @@ node_modules
 .DS_Store
 .vscode/settings.json
 .vscode/extensions.json
+# Compiled test files
+test/**/*.js
+test/**/*.js.map
