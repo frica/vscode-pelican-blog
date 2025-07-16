@@ -1,0 +1,140 @@
+{
+  "name": "pelican-blog-extension",
+  "displayName": "Pelican Blog Extension",
+  "description": "VS Code extension for managing Pelican blog posts",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:markdown"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "pelican-blog.publish",
+        "title": "Publish Post",
+        "category": "Pelican Blog"
+      },
+      {
+        "command": "pelican-blog.toggleDraft",
+        "title": "Toggle Draft Status",
+        "category": "Pelican Blog"
+      },
+      {
+        "command": "pelican-blog.createPost",
+        "title": "Create New Post",
+        "category": "Pelican Blog"
+      },
+      {
+        "command": "pelican-blog.startServer",
+        "title": "Start Preview Server",
+        "category": "Pelican Blog"
+      },
+      {
+        "command": "pelican-blog.stopServer",
+        "title": "Stop Preview Server",
+        "category": "Pelican Blog"
+      },
+      {
+        "command": "pelican-blog.openPreview",
+        "title": "Open Preview",
+        "category": "Pelican Blog"
+      },
+      {
+        "command": "pelican-blog.restartServer",
+        "title": "Restart Preview Server",
+        "category": "Pelican Blog"
+      },
+      {
+        "command": "pelican-blog.checkBuildStatus",
+        "title": "Check Build Status",
+        "category": "Pelican Blog"
+      },
+      {
+        "command": "pelican-blog.insertSnippet",
+        "title": "Insert Snippet",
+        "category": "Pelican Blog"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceExtname == .md",
+          "command": "pelican-blog.publish",
+          "group": "pelican"
+        },
+        {
+          "when": "resourceExtname == .md",
+          "command": "pelican-blog.toggleDraft",
+          "group": "pelican"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Pelican Blog",
+      "properties": {
+        "pelicanBlog.githubToken": {
+          "type": "string",
+          "description": "GitHub personal access token",
+          "default": ""
+        },
+        "pelicanBlog.githubOwner": {
+          "type": "string",
+          "description": "GitHub repository owner",
+          "default": ""
+        },
+        "pelicanBlog.githubRepo": {
+          "type": "string",
+          "description": "GitHub repository name",
+          "default": ""
+        },
+        "pelicanBlog.workflowId": {
+          "type": "string",
+          "description": "GitHub Actions workflow ID",
+          "default": ""
+        },
+        "pelicanBlog.commitMessageTemplate": {
+          "type": "string",
+          "description": "Commit message template (use {title} for post title)",
+          "default": "Update blog post: {title}"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/node": "^16.18.126",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "@vscode/test-electron": "^2.2.0",
+    "eslint": "^8.57.1",
+    "typescript": "^4.9.5"
+  },
+  "keywords": [
+    "pelican",
+    "blog",
+    "markdown",
+    "publishing"
+  ],
+  "author": "",
+  "license": "MIT",
+  "publisher": "your-publisher-name",
+  "dependencies": {
+    "@octokit/rest": "^22.0.0",
+    "gray-matter": "^4.0.3",
+    "simple-git": "^3.28.0"
+  }
+}
