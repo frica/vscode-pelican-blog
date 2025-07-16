@@ -77,7 +77,7 @@ The status bar shows the current post status (Draft/Published) and can be clicke
 
 ## Requirements
 
-- VS Code **^1.74.0**
+- VS Code **1.74.0**
 - Node.js (for development)
 - TypeScript (for development)
 
