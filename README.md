@@ -5,18 +5,21 @@ A VS Code extension for managing your Pelican blog posts, making it easier to wr
 > [!WARNING]  
 > The extension is in a very early stage. I'm working on it for my own needs and currently it's tied to my blog structure. The templates are for example specific for my usage, at the moment.
 
-## Features
+## Features implemented
+
+- :white_check_mark: **Draft Management**: Toggle draft status of your posts
+- :white_check_mark: **Post Templates**: Create new posts from pre-built templates (Articles, Notes, Books Reviews)
+
+## Features WIP
 
 - **One-click Publish**: Quickly publish your blog posts with Git integration and GitHub Actions
-- **Draft Management**: Toggle draft status of your posts
-- **Post Templates**: Create new posts from pre-built templates (Articles, Notes, Books Reviews)
 - **Preview Integration**: Start/stop Pelican development server and open preview in browser
 - **Build Status Monitoring**: Check GitHub Actions build status directly from VS Code
+- **Snippet Insertion**: Quick insertion of common Markdown elements
 
-## Integration
+## Integrations planned
 
 - **Status Bar Integration**: See current post status in the status bar
-- **Snippet Insertion**: Quick insertion of common Markdown elements
 - **GitHub Integration**: Automatic commit, push, and Actions triggering
 - **Configuration Management**: Easy setup of GitHub tokens and repository settings
 - **Context Menu Integration**: Right-click on Markdown files to access commands
