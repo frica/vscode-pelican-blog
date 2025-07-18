@@ -9,7 +9,7 @@ A VS Code extension for managing your Pelican blog posts, making it easier to wr
 
 - :white_check_mark: **Draft Management**: Toggle draft status of your posts
 - :white_check_mark: **Post Templates**: Create new posts from pre-built templates (Articles, Notes, Books Reviews)
-- :white_check_mark: **Preview Integration**: Start/stop Pelican development server and open preview in browser (no auto-reload yet)
+- :white_check_mark: **Preview Integration**: Start/stop Pelican development server and open preview in browser (with auto-reload)
 
 ## Features WIP
 
