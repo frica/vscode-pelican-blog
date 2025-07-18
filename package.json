@@ -139,7 +139,7 @@
   ],
   "author": "Fabien Rica",
   "license": "MIT",
-  "publisher": "Fabien Rica",
+  "publisher": "fabienrica",
   "dependencies": {
     "@octokit/rest": "^22.0.0",
     "gray-matter": "^4.0.3",
