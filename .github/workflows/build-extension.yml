@@ -1,0 +1,68 @@
+name: Build VS Code Extension
+
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run linting
+      run: npm run lint
+
+    - name: Run tests
+      run: npm test
+
+    - name: Compile TypeScript
+      run: npm run compile
+
+    - name: Install vsce (VS Code Extension Manager)
+      run: npm install -g @vscode/vsce
+
+    - name: Package extension
+      run: vsce package --out pelican-blog-extension.vsix
+
+    - name: Upload VSIX artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: pelican-blog-extension-vsix
+        path: pelican-blog-extension.vsix
+        retention-days: 30
+
+    - name: Get package version
+      id: package-version
+      run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+    - name: Create Release (on main branch)
+      if: github.ref == 'refs/heads/main'
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: v${{ steps.package-version.outputs.version }}-${{ github.run_number }}
+        name: Release v${{ steps.package-version.outputs.version }}-${{ github.run_number }}
+        body: |
+          Automated release of Pelican Blog Extension
+          
+          Version: ${{ steps.package-version.outputs.version }}
+          Build: ${{ github.run_number }}
+          Commit: ${{ github.sha }}
+        files: pelican-blog-extension.vsix
+        draft: false
+        prerelease: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
