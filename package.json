@@ -3,6 +3,10 @@
   "displayName": "Pelican Blog Extension",
   "description": "VS Code extension for managing Pelican blog posts",
   "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frica/vscode-pelican-blog.git"
+  },
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -133,9 +137,9 @@
     "markdown",
     "publishing"
   ],
-  "author": "",
+  "author": "Fabien Rica",
   "license": "MIT",
-  "publisher": "your-publisher-name",
+  "publisher": "Fabien Rica",
   "dependencies": {
     "@octokit/rest": "^22.0.0",
     "gray-matter": "^4.0.3",
