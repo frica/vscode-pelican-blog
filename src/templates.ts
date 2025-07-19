@@ -14,13 +14,13 @@ export class TemplateManager {
     {
       name: 'Basic Post',
       description: 'A basic blog post template',
-      content: `Title: "{title}"
+      content: `Title: {title}
 Date: {date}
 Slug: {slug}
 Status: draft
 Tags: 
 Category: Articles
-Summary: ""
+Summary: 
 ---
 
 # {title}
@@ -33,12 +33,12 @@ Write your blog post content here...
     {
       name: 'Notes Post',
       description: 'Template for Notes posts',
-      content: `Title: "{title}"
+      content: `Title: {title}
 Date: {date}
 Slug: {slug}
 Status: draft
 Category: Notes
-summary: "Semaine du au"
+summary: Semaine du au
 
 # {title}
 
@@ -48,7 +48,7 @@ summary: "Semaine du au"
     {
       name: 'Book review Post',
       description: 'Template for book review',
-      content: `Title: "{title}"
+      content: `Title: {title}
 Date: {date}
 Slug: {slug}
 Status: draft
