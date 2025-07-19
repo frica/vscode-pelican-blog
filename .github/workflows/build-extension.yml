@@ -1,5 +1,8 @@
 name: Build VS Code Extension
 
+permissions:
+  contents: write
+
 on:
   push:
   pull_request:
