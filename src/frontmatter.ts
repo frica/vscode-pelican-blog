@@ -76,8 +76,6 @@ export class FrontmatterParser {
         const capitalizedKey = key.charAt(0).toUpperCase() + key.slice(1);
         if (Array.isArray(value)) {
           metadataLines.push(`${capitalizedKey}: ${value.join(', ')}`);
-        } else if (typeof value === 'string' && (value.includes(' ') || value.includes(':'))) {
-          metadataLines.push(`${capitalizedKey}: "${value}"`);
         } else {
           metadataLines.push(`${capitalizedKey}: ${value}`);
         }
