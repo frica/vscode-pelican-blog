@@ -114,8 +114,9 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
+    "pretest": "npm run compile && npm run compile:tests && npm run lint",
     "lint": "eslint src --ext ts",
+    "compile:tests": "tsc -p ./test/tsconfig.json",
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
