@@ -187,7 +187,7 @@ Summary:
     }
 
     const snippets = {
-      'code-block': '```\\n${1:language}\\n${2:code}\\n```\\n',
+      'code-block': '\\t:::\\n${1:language}\\n${2:code}\\n',
       'image': '![${1:alt text}](${2:image-url})\\n',
       'link': '[${1:link text}](${2:url})\\n',
       'quote': '> ${1:quote}\\n',

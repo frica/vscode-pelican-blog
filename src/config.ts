@@ -40,7 +40,7 @@ export class ConfigManager {
    */
   static getCommitMessageTemplate(): string {
     const config = vscode.workspace.getConfiguration(this.CONFIG_KEY);
-    return config.get('commitMessageTemplate', 'Update blog post: {title}');
+    return config.get('commitMessageTemplate', 'add blog post: {title}');
   }
 
   /**
