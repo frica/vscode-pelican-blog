@@ -190,6 +190,7 @@ Summary:
       'code-block': '\\t:::\\n${1:language}\\n${2:code}\\n',
       'image': '![${1:alt text}](${2:image-url})\\n',
       'link': '[${1:link text}](${2:url})\\n',
+      'internal-link': '[${1:link text}]({filename}/${2:location}/${3:filename.md})\\n',
       'quote': '> ${1:quote}\\n',
       'table': '| ${1:Header 1} | ${2:Header 2} |\\n|-------------|-------------|\\n| ${3:Cell 1}  | ${4:Cell 2}  |\\n'
     };

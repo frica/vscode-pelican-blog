@@ -135,6 +135,7 @@ export function activate(context: vscode.ExtensionContext) {
       { label: 'Code Block', value: 'code-block' },
       { label: 'Image', value: 'image' },
       { label: 'Link', value: 'link' },
+      { label: 'Internal Post Link', value: 'internal-link' },
       { label: 'Quote', value: 'quote' },
       { label: 'Table', value: 'table' }
     ];
