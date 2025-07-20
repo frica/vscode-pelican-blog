@@ -10,19 +10,12 @@ A VS Code extension for managing your Pelican blog posts, making it easier to wr
 - :white_check_mark: **Draft Management**: Toggle draft status of your posts
 - :white_check_mark: **Post Templates**: Create new posts from pre-built templates (Articles, Notes, Books Reviews)
 - :white_check_mark: **Preview Integration**: Start/stop Pelican development server and open preview in browser (with auto-reload)
+- :white_check_mark: **Snippet Insertion**: Quick insertion of common Markdown elements
 
 ## Features WIP
 
 - **One-click Publish**: Quickly publish your blog posts with Git integration and GitHub Actions
 - **Build Status Monitoring**: Check GitHub Actions build status directly from VS Code
-- **Snippet Insertion**: Quick insertion of common Markdown elements
-
-## Integrations planned
-
-- **Status Bar Integration**: See current post status in the status bar
-- **GitHub Integration**: Automatic commit, push, and Actions triggering
-- **Configuration Management**: Easy setup of GitHub tokens and repository settings
-- **Context Menu Integration**: Right-click on Markdown files to access commands
 
 ## Installation
 

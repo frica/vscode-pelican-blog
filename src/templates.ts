@@ -16,7 +16,6 @@ export class TemplateManager {
       description: 'A basic blog post template',
       content: `Title: {title}
 Date: {date}
-Slug: {slug}
 Status: draft
 Tags: 
 Category: Articles
@@ -35,10 +34,9 @@ Write your blog post content here...
       description: 'Template for Notes posts',
       content: `Title: {title}
 Date: {date}
-Slug: {slug}
 Status: draft
 Category: Notes
-summary: Semaine du au
+Summary: Du au
 
 # {title}
 
@@ -50,7 +48,6 @@ summary: Semaine du au
       description: 'Template for book review',
       content: `Title: {title}
 Date: {date}
-Slug: {slug}
 Status: draft
 Tags:
 Category: Books
@@ -161,8 +158,10 @@ Summary:
         return 'notes';
       case 'Books':
         return 'books';
+      case 'Misc':
+        return 'articles';
       default:
-        return 'other';
+        return 'articles';
     }
   }
 
@@ -186,13 +185,34 @@ Summary:
       return;
     }
 
+    // Code block snippet
+    const CODE_BLOCK_SNIPPET = `\t:::$\{1:language}
+    $\{2:code}`;
+
+    // Image snippet
+    const IMAGE_SNIPPET = `![\${1:alt text}](\${2:image-url})`;
+
+    // Link snippet
+    const LINK_SNIPPET = `[$\{1:link text}]($\{2:url})`;
+
+    // Internal link snippet
+    const INTERNAL_LINK_SNIPPET = `[$\{1:link text}]({filename}/$\{2:location}/$\{3:filename.md})`;
+
+    // Quote snippet
+    const QUOTE_SNIPPET = `> $\{1:quote}`;
+
+    // Table snippet
+    const TABLE_SNIPPET = `| $\{1:Header 1} | $\{2:Header 2} |
+|-------------|-------------|
+| $\{3:Cell 1}  | $\{4:Cell 2}  |`;
+
     const snippets = {
-      'code-block': '\\t:::\\n${1:language}\\n${2:code}\\n',
-      'image': '![${1:alt text}](${2:image-url})\\n',
-      'link': '[${1:link text}](${2:url})\\n',
-      'internal-link': '[${1:link text}]({filename}/${2:location}/${3:filename.md})\\n',
-      'quote': '> ${1:quote}\\n',
-      'table': '| ${1:Header 1} | ${2:Header 2} |\\n|-------------|-------------|\\n| ${3:Cell 1}  | ${4:Cell 2}  |\\n'
+      'code-block': CODE_BLOCK_SNIPPET,
+      'image': IMAGE_SNIPPET,
+      'link': LINK_SNIPPET,
+      'internal-link': INTERNAL_LINK_SNIPPET,
+      'quote': QUOTE_SNIPPET,
+      'table': TABLE_SNIPPET
     };
 
     const snippet = snippets[snippetName as keyof typeof snippets];
