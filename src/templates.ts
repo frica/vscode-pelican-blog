@@ -38,9 +38,8 @@ Status: draft
 Category: Notes
 Summary: Du au
 
-# {title}
+#  Du au
 
-## Prerequisites
 `
     },
     {
