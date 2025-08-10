@@ -12,9 +12,9 @@ export interface PostTemplate {
 export class TemplateManager {
   private static readonly DEFAULT_TEMPLATES: PostTemplate[] = [
     {
-      name: 'Basic Post',
-      description: 'A basic blog post template',
-      content: `Title: {title}
+  name: 'Basic Post',
+  description: 'A basic blog post template',
+  content: `Title: {title}
 Date: {date}
 Status: draft
 Tags: 
@@ -28,51 +28,78 @@ Write your blog post content here...
 
 ## Heading
 `
-    },
-    {
-      name: 'Notes Post',
-      description: 'Template for Notes posts',
-      content: `Title: {title}
-Date: {date}
-Status: draft
-Category: Notes
-Summary: Du au
-
-#  Du au
-
-`
-    },
-    {
-      name: 'Book review Post',
-      description: 'Template for book review',
-      content: `Title: {title}
-Date: {date}
-Status: draft
-Tags:
-Category: Books
-Summary:
-
-# {title}
-
-## Overview
-
-## Conclusion
-
-**Overall Rating:** ⭐⭐⭐⭐⭐ (X/5)
-`
     }
   ];
+
+  /**
+   * Load user templates from the 'templates' folder in the workspace.
+   */
+  private static async loadUserTemplates(): Promise<PostTemplate[]> {
+    const workspaceFolder = vscode.workspace.workspaceFolders?.[0];
+    if (!workspaceFolder) {
+      return [];
+    }
+    const templatesDir = path.join(workspaceFolder.uri.fsPath, 'templates');
+    if (!fs.existsSync(templatesDir)) {
+      return [];
+    }
+    const files = fs.readdirSync(templatesDir).filter(f => f.endsWith('.md'));
+    const templates: PostTemplate[] = [];
+    for (const file of files) {
+      const filePath = path.join(templatesDir, file);
+      try {
+        const content = fs.readFileSync(filePath, 'utf8');
+        // Optionally, parse first line as description if it starts with <!-- desc: ... -->
+        let description = '';
+        const descMatch = content.match(/^<!--\s*desc:(.*?)-->/i);
+        if (descMatch) {
+          description = descMatch[1].trim();
+        }
+        templates.push({
+          name: path.basename(file, '.md'),
+          description: description || 'User template',
+          content
+        });
+      } catch (e) {
+      }
+    }
+    vscode.window.showInformationMessage(`Total user templates loaded: ${templates.length}`);
+    return templates;
+  }
+
+  /**
+   * Get all templates, with user templates taking precedence by name.
+   */
+  private static async getAllTemplates(): Promise<PostTemplate[]> {
+    const userTemplates = await this.loadUserTemplates();
+    const userTemplateNames = new Set(userTemplates.map(t => t.name));
+    // Filter out default templates that are overridden by user templates
+    const filteredDefaults = this.DEFAULT_TEMPLATES.filter(t => !userTemplateNames.has(t.name));
+    return [...userTemplates, ...filteredDefaults];
+  }
 
   /**
    * Create a new post from template
    */
   static async createNewPost(): Promise<void> {
-    // Select template
-    const templateItems = this.DEFAULT_TEMPLATES.map(template => ({
-      label: template.name,
-      description: template.description,
-      template: template
-    }));
+
+    // Load templates (user + default)
+    const templates = await this.getAllTemplates();
+    if (templates.length === 0) {
+      vscode.window.showErrorMessage('No templates found. Add templates to the templates folder or use built-in defaults.');
+      return;
+    }
+
+    // Select template, show dashes as spaces and capitalize first letter in the label
+    const templateItems = templates.map(template => {
+      const label = template.name.replace(/-/g, ' ');
+      const capitalized = label.charAt(0).toUpperCase() + label.slice(1);
+      return {
+        label: capitalized,
+        description: template.description,
+        template: template
+      };
+    });
 
     const selectedTemplate = await vscode.window.showQuickPick(templateItems, {
       placeHolder: 'Select a post template'

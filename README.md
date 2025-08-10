@@ -46,13 +46,40 @@ Before using the extension, configure the following settings in VS Code:
 
 ### Enhanced Commands
 
-- `Pelican Blog: Create New Post` - Create a new post from templates
+- `Pelican Blog: Create New Post` - Create a new post from templates (see Custom Templates below)
 - `Pelican Blog: Start Preview Server` - Start Pelican development server
 - `Pelican Blog: Stop Preview Server` - Stop the development server
 - `Pelican Blog: Open Preview` - Open blog preview in browser
 - `Pelican Blog: Restart Preview Server` - Restart the development server
 - `Pelican Blog: Check Build Status` - Check GitHub Actions build status
 - `Pelican Blog: Insert Snippet` - Insert common Markdown snippets
+
+## Custom Post Templates
+
+You can define your own post templates by adding Markdown files to a folder named `templates` at the root of your blog workspace (next to `package.json`).
+
+- Each `.md` file in the `templates` folder becomes a selectable template in the "Create New Post" command.
+- The template name shown in the picker is based on the filename (without extension), with dashes (`-`) shown as spaces.
+- Optionally, you can add a description to the top of your template file using an HTML comment:
+
+   ```markdown
+   <!-- desc: My custom template description -->
+   Title: {title}
+   Date: {date}
+   Status: draft
+   Category: Custom
+   Summary:
+
+   # {title}
+   ...
+   ```
+
+- You can use placeholders like `{title}`, `{date}`, `{slug}`, `{description}` in your template content. These will be replaced when creating a new post.
+- User templates override built-in templates if they have the same name.
+
+**Example:**
+
+If you add a file `my-note-template.md` to the `templates` folder, it will appear as "My note template" in the template picker.
 
 ### Context Menu
 
